@@ -1,5 +1,10 @@
-
 # microk8s
+https://microk8s.io/ \
+https://microk8s.io/docs/working-with-kubectl \
+https://microk8s.io/docs/addon-dashboard \
+https://www.linkedin.com/pulse/9-steps-enable-kubernetes-dashboard-microk8s-hendri-t \
+https://microk8s.io/docs/addons \
+https://microk8s.io/docs/addon-host-access \
 
 ## Install
 `sudo snap install microk8s --classic`
