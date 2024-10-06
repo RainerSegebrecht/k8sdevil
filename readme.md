@@ -6,9 +6,19 @@ https://www.linkedin.com/pulse/9-steps-enable-kubernetes-dashboard-microk8s-hend
 https://microk8s.io/docs/addons \
 https://microk8s.io/docs/addon-host-access \
 
+
+
 ## Install
 `sudo snap install microk8s --classic`
 
+## Install specific k8s version
+https://microk8s.io/docs/setting-snap-channel \ 
+
+
+### list versions
+'snap info microk8s' \
+
+'sudo snap install microk8s --classic --channel=1.29/stable' \
 
 ## Check state
 `sudo microk8s status --wait-ready`
@@ -57,17 +67,17 @@ https://microk8s.io/docs/addon-host-access \
 ### Test-Loadbalancer mit external IP
 
 #### deploy services
-sudo microk8s kubectl apply -f service-1.yml
-deployment.apps/service1 created
-service/service1 created
-sudo microk8s kubectl apply -f service-2.yml
-deployment.apps/service2 created
-service/service2 created
-sudo microk8s kubectl apply -f service-3.yml
-deployment.apps/service3 created
-service/service3 created
+`sudo microk8s kubectl apply -f service-1.yml `
+`  deployment.apps/service1 created`
+`  service/service1 created`
+`sudo microk8s kubectl apply -f service-2.yml`
+`  deployment.apps/service2 created`
+`  service/service2 created`
+`sudo microk8s kubectl apply -f service-3.yml`
+`  deployment.apps/service3 created`
+`  service/service3 created`
 
 #### check services from external
-curl -H "Host: api.mysite.net" http://mk8s.local/hello
-curl -H "Host: api.myothersite.net" http://mk8s.local/service2/hello
-curl -H "Host: api.myothersite.net" http://mk8s.local/service3/hello
+`curl -H "Host: api.mysite.net" http://mk8s.local/hello`
+`curl -H "Host: api.myothersite.net" http://mk8s.local/service2/hello`
+`curl -H "Host: api.myothersite.net" http://mk8s.local/service3/hello`
