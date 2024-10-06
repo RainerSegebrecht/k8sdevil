@@ -36,3 +36,16 @@ https://microk8s.io/docs/addon-host-access \
 `sudo microk8s stop` \
 `sudo microk8s start` \
 
+LoadBalancer
+
+sudo microk8s enable ingress metallb
+...
+Enter each IP address range delimited by comma (e.g. '10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111'): 10.0.0.1-10.0.1.0
+
+sudo microk8s kubectl -n ingress get svc
+NAME      TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+ingress   LoadBalancer   10.152.183.32   10.0.0.1      80:31488/TCP,443:31948/TCP   18s
+
+/etc/hosts
+10.0.0.1        mk8s.local
+
