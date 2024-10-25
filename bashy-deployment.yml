@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bashy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bashy
+  template:
+    metadata:
+      labels:
+        app: bashy
+    spec:
+      containers:
+        - name: bashy
+          image: localhost:32000/bashy:1.0
+      nodeSelector:
+        kubernetes.io/os: linux

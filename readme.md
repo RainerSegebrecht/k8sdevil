@@ -8,8 +8,12 @@ https://microk8s.io/docs/addon-host-access
 
 
 
-## Install
+## Install kubectl
+* sudo snap install kubectl --classic
+
+## Install microk8s
 `sudo snap install microk8s --classic`
+
 
 ## Install specific k8s version
 https://microk8s.io/docs/setting-snap-channel
@@ -18,6 +22,9 @@ https://microk8s.io/docs/setting-snap-channel
 ### list versions
 `snap info microk8s` \
 `sudo snap install microk8s --classic --channel=1.29/stable`
+
+## start
+sudo microk8s start
 
 ## Check state
 `sudo microk8s status --wait-ready`
@@ -33,9 +40,7 @@ https://microk8s.io/docs/setting-snap-channel
 `sudo microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443`
 
 ## Enable community addons for cilium
-
 `sudo microk8s enable community` \
-`sudo microk8s status` \
 `sudo microk8s enable cilium` \
 `sudo microk8s cilium hubble enable`
 
@@ -45,9 +50,7 @@ https://microk8s.io/docs/setting-snap-channel
 `sudo microk8s start`
 
 ## LoadBalancer metallb
-`sudo microk8s enable ingress metallb` \
-... \
-`Enter each IP address range delimited by comma (e.g. '10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111'): 10.0.0.1-10.0.1.0`
+`sudo microk8s enable ingress metallb:10.0.0.1-10.0.1.0` 
 
 ### loadbalancer ingress
 `sudo microk8s kubectl apply -f ingress.yml`
@@ -78,3 +81,30 @@ https://microk8s.io/docs/setting-snap-channel
 `curl -H "Host: api.mysite.net" http://mk8s.local/hello` \
 `curl -H "Host: api.myothersite.net" http://mk8s.local/service2/hello` \
 `curl -H "Host: api.myothersite.net" http://mk8s.local/service3/hello`
+
+# development
+## Registry
+* microk8s enable registry:size=40Gi
+* check
+   * curl -v http://localhost:32000/v2/
+      * ... HTTP/1.1 200 OK ...
+* https://microk8s.io/docs/registry-built-in
+* https://discuss.kubernetes.io/t/how-to-use-the-built-in-registry/11274
+
+## skaffold
+* https://skaffold.dev/docs/install/
+* https://skaffold.dev/docs/tutorials/
+
+## buildah
+https://github.com/containers/buildah/blob/main/install.md
+
+### build Image
+* cd Docker
+* buildah build -f Dockerfile -t localhost:32000/bashy:1.0
+
+### push build image to microk8s registry
+insecure registry, therefore no tls verify \
+`buildah --tls-verify=false push localhost:32000/bashy:1.0`
+
+### check deployment
+sudo microk8s kubectl apply -f bashy-deployment.yml
